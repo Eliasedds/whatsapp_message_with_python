@@ -19,17 +19,20 @@ while x < 2:
     hour, minute = now.hour, now.minute
     print("Actualmente son las " + str(hour) + ":" + str(minute))
     user_hour = int(input("Dentro de cuantas horas lo quiere enviar:\n"))
+    assert user_hour >= 0, 'La hora ingresa no puede ser negativa'
     user_minute = int(input("Dentro de cuantos minutos quiere enviar el mensaje:\n"))
+    assert user_minute >= 0, 'Los minutos ingresados no pueden ser negativos' 
     hour_message = hour + user_hour
     minute_message = minute + user_minute
 
     try:
+        print(f'El mensaje será enviado a las {hour_message}:{minute_message}')
         kit.sendwhatmsg(contacts[selected_contact], message, hour_message, minute_message)
         print("Mensaje enviado con exito")
     except:
         print("Error al enviar el mensaje")
-
-    x = int(input("Desea continuar\n1. SI \n2. NO\n(Seleccione el número de la acción deseada)\n\t"))
+    finally:
+        x = int(input("Desea continuar\n1. SI \n2. NO\n(Seleccione el número de la acción deseada)\n\t"))
 
 print("Chao! Ha sido un placer ayudarte")
 print("-"*30)
