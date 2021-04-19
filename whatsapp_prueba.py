@@ -9,13 +9,10 @@ while x < 2:
 
     contacts = {'papa':"+584145177288",'mama':"+584140727383", 'paul':"+5491135137095",
                 'emi':"+5491131414249", 'samy':'+5491132891480', 'cande':'+5491173673595'}
-    try:
-        for contact in contacts.keys():
-            print(contact)
-    except KeyError:
-        print('Contacto no encontrado')
-
+    for contact in contacts.keys():
+        print(contact)
     selected_contact = input("¿Cual de sus contactos desea enviarle un mensaje: ")
+    assert selected_contact in contacts.keys(), 'El contacto no esta en la agenda'
     message = input("Inserte el mensaje que quiere enviar:\n")
 
     now = datetime.now()
@@ -27,7 +24,7 @@ while x < 2:
     minute_message = minute + user_minute
 
     try:
-        kit.sendwhatmsg(contact[selected_contact], message, hour_message, minute_message)
+        kit.sendwhatmsg(contacts[selected_contact], message, hour_message, minute_message)
         print("Mensaje enviado con exito")
     except:
         print("Error al enviar el mensaje")
