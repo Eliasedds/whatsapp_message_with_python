@@ -39,8 +39,7 @@ def mensaje_a_enviar(contactos:dict, contacto:str, mensaje:str, hora:int, minuto
 def run():
     print("-"*30)
 
-    contactos = {'papa':"+584145177288",'mama':"+584140727383", 'paul':"+5491135137095",
-                'emi':"+5491131414249", 'samy':'+5491132891480', 'cande':'+5491173673595'}
+    contactos = {'contacto_1':"+########",'contacto_2':"+############", 'contacto_3':"+###########"}
 
     x = 1
     while x < 2:
