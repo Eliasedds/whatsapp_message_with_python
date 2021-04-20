@@ -1,38 +1,58 @@
 from datetime import date, datetime
 import pywhatkit as kit
+    
+def buscar_contacto(contactos:dict):
+    for contacto in contactos.keys():
+        print(contacto)
+    contacto_seleccionado = input("¿Cual de sus contactos desea enviarle un mensaje: ")
+    assert contacto_seleccionado in contactos.keys(), 'El contacto no esta en la agenda'
+    contacto_seleccionado = contacto_seleccionado.lower().strip()
+    return contacto_seleccionado    
+    
+def redaccion_mensaje():
+    mensaje = input("Inserte el mensaje que quiere enviar:\n")
+    return mensaje
 
-print("-"*30)
+def hora_mensaje():
+    ahora = datetime.now()
+    hora, minuto = ahora.hour, ahora.minute
+    print("Actualmente son las " + str(hora) + ":" + str(minuto))
+    hora_usuario = int(input("Dentro de cuantas horas lo quiere enviar:\n"))
+    assert hora_usuario >= 0, 'La hora ingresa no puede ser negativa'
+    minuto_usuario = int(input("Dentro de cuantos minutos quiere enviar el mensaje:\n"))
+    assert minuto_usuario >= 0, 'Los minutos ingresados no pueden ser negativos' 
+    hora_mensaje = hora + hora_usuario
+    minuto_mensaje = minuto + minuto_usuario
+    return [hora_mensaje, minuto_mensaje]
 
-x = 1
-while x < 2:
-    print("Hola, soy Juancho tu ayudante para enviar mensajes")
-
-    contacts = {'papa':"+584145177288",'mama':"+584140727383", 'paul':"+5491135137095",
-                'emi':"+5491131414249", 'samy':'+5491132891480', 'cande':'+5491173673595'}
-    for contact in contacts.keys():
-        print(contact)
-    selected_contact = input("¿Cual de sus contactos desea enviarle un mensaje: ")
-    assert selected_contact in contacts.keys(), 'El contacto no esta en la agenda'
-    message = input("Inserte el mensaje que quiere enviar:\n")
-
-    now = datetime.now()
-    hour, minute = now.hour, now.minute
-    print("Actualmente son las " + str(hour) + ":" + str(minute))
-    user_hour = int(input("Dentro de cuantas horas lo quiere enviar:\n"))
-    assert user_hour >= 0, 'La hora ingresa no puede ser negativa'
-    user_minute = int(input("Dentro de cuantos minutos quiere enviar el mensaje:\n"))
-    assert user_minute >= 0, 'Los minutos ingresados no pueden ser negativos' 
-    hour_message = hour + user_hour
-    minute_message = minute + user_minute
-
+def mensaje_a_enviar(contactos ,buscar_contacto, redaccion_mensaje, hora:int, minuto:int):
     try:
-        print(f'El mensaje será enviado a las {hour_message}:{minute_message}')
-        kit.sendwhatmsg(contacts[selected_contact], message, hour_message, minute_message)
+        print(f'El mensaje será enviado a las {hora}:{minuto}')
+        kit.sendwhatmsg(contactos[buscar_contacto], redaccion_mensaje, hora, minuto)
         print("Mensaje enviado con exito")
     except:
         print("Error al enviar el mensaje")
-    finally:
-        x = int(input("Desea continuar\n1. SI \n2. NO\n(Seleccione el número de la acción deseada)\n\t"))
 
-print("Chao! Ha sido un placer ayudarte")
-print("-"*30)
+
+def run():
+    print("-"*30)
+
+    contactos = {'papa':"+584145177288",'mama':"+584140727383", 'paul':"+5491135137095",
+                'emi':"+5491131414249", 'samy':'+5491132891480', 'cande':'+5491173673595'}
+
+    x = 1
+    while x < 2:
+        print("Hola, soy Juancho tu ayudante para enviar mensajes")
+    
+        contacto = buscar_contacto(contactos)
+        mensaje = redaccion_mensaje()
+        hora, minuto = hora_mensaje()
+        mensaje_a_enviar(contactos, contacto, mensaje, hora, minuto)
+
+        x = int(input("Desea continuar\n1. SI \n2. NO\n(Seleccione el número de la acción deseada)\n"))
+
+    print("Chao! Ha sido un placer ayudarte")
+    print("-"*30)
+
+if __name__ == '__main__':
+    run()
