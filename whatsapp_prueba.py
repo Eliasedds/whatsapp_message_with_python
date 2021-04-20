@@ -3,10 +3,12 @@ import pywhatkit as kit
     
 def buscar_contacto(contactos:dict):
     for contacto in contactos.keys():
-        print(contacto)
+        print(contacto.capitalize())
+    
     contacto_seleccionado = input("¿Cual de sus contactos desea enviarle un mensaje: ")
     assert contacto_seleccionado in contactos.keys(), 'El contacto no esta en la agenda'
     contacto_seleccionado = contacto_seleccionado.lower().strip()
+    
     return contacto_seleccionado    
     
 def redaccion_mensaje():
@@ -25,10 +27,10 @@ def hora_mensaje():
     minuto_mensaje = minuto + minuto_usuario
     return [hora_mensaje, minuto_mensaje]
 
-def mensaje_a_enviar(contactos ,buscar_contacto, redaccion_mensaje, hora:int, minuto:int):
+def mensaje_a_enviar(contactos:dict, contacto:str, mensaje:str, hora:int, minuto:int):
     try:
         print(f'El mensaje será enviado a las {hora}:{minuto}')
-        kit.sendwhatmsg(contactos[buscar_contacto], redaccion_mensaje, hora, minuto)
+        kit.sendwhatmsg(contactos[contacto], mensaje, hora, minuto)
         print("Mensaje enviado con exito")
     except:
         print("Error al enviar el mensaje")
